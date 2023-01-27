@@ -5,4 +5,7 @@ const router = Router();
 
 router.get('/contacts', ContactControllers.index);
 
+router.get('/contacts/:id', ContactControllers.show);
+router.delete('/contacts/:id', ContactControllers.delete);
+
 module.exports = router;

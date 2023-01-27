@@ -13,5 +13,8 @@ module.exports = {
   rules: {
     'class-methods-use-this': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'no-promise-executor-return': 'off',
+    'prefer-const': 'off',
+    'no-return-assign': 'off',
   },
 };
