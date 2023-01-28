@@ -16,5 +16,6 @@ module.exports = {
     'no-promise-executor-return': 'off',
     'prefer-const': 'off',
     'no-return-assign': 'off',
+    camelcase: 'off',
   },
 };

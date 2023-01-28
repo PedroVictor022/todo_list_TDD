@@ -1,12 +1,12 @@
-const { uuid } = require('uuidv4');
+const { v4 } = require('uuid');
 
 let contacts = [
   {
-    id: uuid(),
+    id: v4(),
     name: 'Mateus',
     email: 'meteus@mail.com',
     phone: '123123123',
-    category_id: uuid(),
+    category_id: v4(),
   },
 ];
 
@@ -23,10 +23,32 @@ class ContactsRepository {
     ));
   }
 
+  findByEmail(email) {
+    return new Promise((resolve) => resolve(
+      contacts.find((contact) => contact.email === email),
+    ));
+  }
+
   deleteByID(id) {
     return new Promise((resolve) => resolve(
       contacts = contacts.filter((contact) => contact.id !== id),
     ));
+  }
+
+  create({
+    name, email, phone, category_id,
+  }) {
+    return new Promise((resolve) => {
+      const newContact = {
+        id: v4(),
+        name,
+        email,
+        phone,
+        category_id,
+      };
+      contacts.push(newContact);
+      resolve(newContact);
+    });
   }
 }
 
