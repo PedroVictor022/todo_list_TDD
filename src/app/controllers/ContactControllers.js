@@ -15,9 +15,9 @@ class ContactController {
     return res.json({ findID });
   }
 
-  store(req, res) {
-
-  }
+  // store(req, res) {
+  // console.log();
+  // }
 
   update() {
     // Update a register
