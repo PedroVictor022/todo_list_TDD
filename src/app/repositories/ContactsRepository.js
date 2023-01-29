@@ -1,20 +1,11 @@
-const { v4 } = require('uuid');
 const db = require('../../database');
 
-let contacts = [
-  {
-    id: v4(),
-    name: 'Mateus',
-    email: 'meteus@mail.com',
-    phone: '123123123',
-    category_id: v4(),
-  },
-];
-
 class ContactsRepository {
-  async findAll() {
+  async findAll(orderBy = 'ASC') {
     // Retorna os contatos de forma ascendente
-    const rows = await db.query('SELECT * FROM contacts ORDER BY');
+    const direction = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+
+    const rows = await db.query(`SELECT * FROM contacts ORDER BY name ${direction}`);
     return rows;
   }
 
@@ -28,10 +19,9 @@ class ContactsRepository {
     return row;
   }
 
-  deleteByID(id) {
-    return new Promise((resolve) => resolve(
-      contacts = contacts.filter((contact) => contact.id !== id),
-    ));
+  async deleteByID(id) {
+    const [deleteOp] = await db.query('DELETE FROM contacts WHERE id = $1', [id]);
+    return deleteOp;
   }
 
   async create({
@@ -46,22 +36,16 @@ class ContactsRepository {
     return row;
   }
 
-  update(id, {
+  async update(id, {
     name, email, phone, category_id,
   }) {
-    return new Promise((resolve) => {
-      const updateContact = {
-        id,
-        name,
-        email,
-        phone,
-        category_id,
-      };
-      contacts = contacts.map((contact) => (
-        contact.id === id ? updateContact : contact
-      ));
-      resolve(updateContact);
-    });
+    const row = await db.query(`
+      UPDATE contacts
+      SET name = $1, email = $2, phone = $3, category_id = $4
+      WHERE id = $5
+      RETURNING *
+    `, [name, email, phone, category_id, id]);
+    return row;
   }
 }
 
