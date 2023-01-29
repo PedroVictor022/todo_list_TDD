@@ -6,13 +6,16 @@ class ContactController {
     return res.json({ contacts });
   }
 
-  show(req, res) {
+  async show(req, res) {
     const { id } = req.params;
-    const findID = ContactRepository.findByID(id);
-    if (!findID) {
+    const contact = await ContactRepository.findByID(id);
+
+    if (!contact) {
+      console.log('Contact not found');
       return res.status(404).json({ error: 'Contact not found!' });
     }
-    return res.json({ findID });
+
+    return res.json(contact);
   }
 
   async store(req, res) {

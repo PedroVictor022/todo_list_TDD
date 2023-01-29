@@ -1,4 +1,5 @@
 const { v4 } = require('uuid');
+const db = require('../../database');
 
 let contacts = [
   {
@@ -11,22 +12,20 @@ let contacts = [
 ];
 
 class ContactsRepository {
-  findAll() {
-    return new Promise((resolve) => {
-      resolve(contacts);
-    });
+  async findAll() {
+    // Retorna os contatos de forma ascendente
+    const rows = await db.query('SELECT * FROM contacts ORDER BY');
+    return rows;
   }
 
-  findByID(id) {
-    return new Promise((resolve) => resolve(
-      contacts.find((contact) => contact.id === id),
-    ));
+  async findByID(id) {
+    const [row] = await db.query('SELECT * FROM contacts WHERE id = $1', [id]);
+    return row;
   }
 
-  findByEmail(email) {
-    return new Promise((resolve) => resolve(
-      contacts.find((contact) => contact.email === email),
-    ));
+  async findByEmail(email) {
+    const [row] = await db.query('SELECT * FROM contacts WHERE email = $1', [email]);
+    return row;
   }
 
   deleteByID(id) {
@@ -35,20 +34,16 @@ class ContactsRepository {
     ));
   }
 
-  create({
+  async create({
     name, email, phone, category_id,
   }) {
-    return new Promise((resolve) => {
-      const newContact = {
-        id: v4(),
-        name,
-        email,
-        phone,
-        category_id,
-      };
-      contacts.push(newContact);
-      resolve(newContact);
-    });
+    const [row] = await db.query(`
+    INSERT INTO contacts (name, email, phone, category_id)
+    VALUES($1, $2, $3, $4)
+    RETURNING *
+    `, [name, email, phone, category_id]);
+
+    return row;
   }
 
   update(id, {
