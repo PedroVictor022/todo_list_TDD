@@ -11,12 +11,6 @@ class ContactsRepository {
     LEFT JOIN categories ON categories.id = contacts.category_id
     ORDER BY contacts.name ${direction}
     `);
-
-    // const rows = await db.query(`
-    //   SELECT *
-    //   FROM contacts
-    //   ORDER BY contacts.name ${direction}`);
-
     return rows;
   }
 
