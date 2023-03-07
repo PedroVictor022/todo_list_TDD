@@ -1,6 +1,5 @@
-import { Container } from '../styles';
 import logo from '../../../assets/images/logo.svg';
-import { InputSearchContainer } from './styles';
+import { Container, InputSearchContainer } from './styles';
 
 export default function Header() {
   return (

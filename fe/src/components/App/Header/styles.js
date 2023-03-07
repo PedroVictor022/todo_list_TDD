@@ -1,16 +1,17 @@
 import styled from 'styled-components';
 
-export const Container = styled.header`
+export const Container = styled.div`
   margin-top: 74px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
+
 `;
 
 export const InputSearchContainer = styled.div`
   margin-top: 48px;
-    width: 100%;
+  width: 100%;
 
   input {
     width: 100%;
