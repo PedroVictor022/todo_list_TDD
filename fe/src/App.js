@@ -1,8 +1,11 @@
+import { ThemeProvider } from 'styled-components';
+import defaultTHeme from './assets/styles/themes/default';
+
 function App() {
   return (
-    <div className="App">
+    <ThemeProvider theme={defaultTHeme}>
       <h1>My Contacts</h1>
-    </div>
+    </ThemeProvider>
   );
 }
 
