@@ -1,4 +1,4 @@
-import logo from '../../../assets/images/logo.svg';
+import logo from '../../assets/images/logo.svg';
 import { Container, InputSearchContainer } from './styles';
 
 export default function Header() {
@@ -6,7 +6,7 @@ export default function Header() {
     <Container>
       <img src={logo} alt="MyContacts" width="201" />
       <InputSearchContainer>
-        <input type="text" />
+        <input type="text" placeholder="Pesquise pelo nome" />
       </InputSearchContainer>
     </Container>
   );
