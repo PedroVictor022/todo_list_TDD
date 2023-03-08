@@ -22,5 +22,10 @@ export const Header = styled.div`
     border: 2px solid  ${({ theme }) => theme.colors.primary.main};
     padding: 8px 16px;
     border-radius: 4px;
+    transition: all .2s ease-in;
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.primary.main};
+      color: #fff;
+    }
   }
 `;
