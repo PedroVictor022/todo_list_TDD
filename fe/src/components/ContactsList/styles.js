@@ -57,6 +57,10 @@ export const Card = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  & + & {
+    margin-top: 1rem;
+  }
+
   .info {
     .contact-name {
       display: flex;
@@ -66,7 +70,24 @@ export const Card = styled.div`
          color: ${({ theme }) => theme.colors.primary.main};
          font-weight: bold;
          text-transform: uppercase;
+         padding: 4px;
+         border-radius: 4px;
+         margin-left: 8px;
       }
+    }
+    span {
+      display: block;
+      font-size: 14px;
+      color: ${({ theme }) => theme.colors.gray[200]};
+    }
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    button {
+      background-color: transparent;
+      border: none;
+      margin-left: 8px;
     }
   }
 `;
