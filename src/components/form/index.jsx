@@ -1,5 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { Button } from "../button";
+import { Input } from "../input";
 
 export function ListForm() {
   const [tasks, setTasks] = useState([]);
@@ -8,32 +10,44 @@ export function ListForm() {
   const handleSubmit = (e) => {
     e.preventDefault() ;
 
-    const arrTask = [...tasks, {
-      id: Math.random().toFixed(2),
-      title: inputTask
-    }];
-    setTasks(arrTask);
-    console.log(tasks);
+    if(!inputTask.trim()) {
+      return;
+    }
+
+    setTasks([
+      ...tasks,
+      {
+        id: Math.floor(Math.random() * 100),
+        title: inputTask
+      }
+    ])
 
   }
+
+  const handleDelete = (id) => {
+    const temp = tasks.filter(task => task.id !== id);
+    temp.slice(id, 1);
+    setTasks(temp);
+  };
 
   return (
     <Container>
       <form className="actions" onSubmit={handleSubmit}>
-        <input 
+        <Input 
           type="text" 
           value={inputTask}
           onChange={(e) => setInputTask(e.target.value)}
         />
-        <button>oi</button>
+        <Button>Adicionar</Button>
       </form>
       <div className="tasks">
         {
-          tasks.map((item) => {
-            <div>
-              <p>oi{item.title}</p>
-            </div>
-          })
+          tasks.map((item) => (
+            <Item key={item.id}>
+              <p>{item.title}</p>
+              <button onClick={(id) => handleDelete(item.id)}>Delete</button>
+            </Item>
+          ))
         }
       </div>
     </Container>
@@ -57,5 +71,16 @@ const Container = styled.div`
     align-items:center;
     justify-content:space-around;
     width:100%;
+  }
+`;
+
+const Item = styled.div`
+  display:flex;
+  gap:1rem;
+
+  padding:1rem;
+  button {
+    outline: none;
+    border:none;
   }
 `;
